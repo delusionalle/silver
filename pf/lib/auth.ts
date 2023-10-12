@@ -9,6 +9,7 @@ const discordScopes = ['identify', 'email'].join(' ')
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(db),
+  secret: env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
   },

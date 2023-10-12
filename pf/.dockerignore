@@ -9,7 +9,7 @@
 **/.venv
 **/.classpath
 **/.dockerignore
-pf/.env.local
+**/.env
 **/.git
 **/.gitignore
 **/.project
@@ -24,7 +24,7 @@ pf/.env.local
 **/charts
 **/docker-compose*
 **/compose*
-**/Dockerfile*
+DONTUSEDockerfile-prisma-studio
 **/node_modules
 **/npm-debug.log
 **/obj
