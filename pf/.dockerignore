@@ -24,7 +24,6 @@
 **/charts
 **/docker-compose*
 **/compose*
-DONTUSEDockerfile-prisma-studio
 **/node_modules
 **/npm-debug.log
 **/obj

@@ -25,4 +25,12 @@ linking:
 
 - should improve and clean ml solution
 
+12 oct progress check:
+- FIX DOCKER
+- make API for model (flask or django I DONT CARE JUST MAKE IT)
+- implement nginx proxy (should be easy)
+- ACTUALLY MAKE DASHBOARD | BASIC LAYOUT
+- WTF KIND OF ANALYTICS DO WE NEED?
+- ACTUALLY MAKE DASHBOARD | ANALYTICS
+
 ## .2023
