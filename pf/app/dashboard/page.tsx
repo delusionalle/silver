@@ -7,7 +7,9 @@ export default function DashboardPage() {
   return (
     <main className="flex min-h-screen flex-col items-center p-24 justify-evenly">
       <h1>dashboard</h1>
-      <Button>button</Button>
+      <Link href="/">
+        <Button>button</Button>
+      </Link>
     </main>
   )
 }

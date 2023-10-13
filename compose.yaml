@@ -20,7 +20,7 @@ services:
         condition: service_healthy
 
   db:
-    image: postgres:12-alpine
+    image: postgres:16-alpine
     restart: always
     ports:
       - 5432:5432
@@ -28,6 +28,8 @@ services:
       - db-data:/var/lib/postgresql/data
     user: postgres
     environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=silver
       - POSTGRES_PASSWORD=thisisalocalnetworkserver
     healthcheck:
       test: [ "CMD", "pg_isready" ]
