@@ -9,7 +9,7 @@
 **/.venv
 **/.classpath
 **/.dockerignore
-pf/.env.local
+pf/.env.production
 **/.git
 **/.gitignore
 **/.project
@@ -23,7 +23,7 @@ pf/.env.local
 **/bin
 **/charts
 **/docker-compose*
-**/compose*
+docker/compose.dev.yaml
 **/Dockerfile*
 **/node_modules
 **/npm-debug.log

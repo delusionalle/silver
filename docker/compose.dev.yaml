@@ -1,20 +1,13 @@
 services:
   pf:
     build:
-      context: pf
+      context: ../pf
       target: deploy
-    #ports:
-    #  - "3000:3000"
-    environment:
-      - POSTGRES_DB=silver
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=thisisalocalnetworkserver
-      # this variable doesn't load in next.js .env loader. Unlucky
-      #- NEXTAUTH_SECRET=
-
-    # i fixed next.js env loader // maybe i didnt
+      dockerfile: dev.Dockerfile
+    ports:
+      - "3000:3000"
     env_file:
-      - pf/.env.local
+      - ../pf/.env.development
     depends_on:
       db:
         condition: service_healthy
@@ -44,7 +37,7 @@ services:
   #      - "5555:5555"
   #    build:
   #      context: pf
-  #      dockerfile: Dockerfile-prisma-studio
+  #      dockerfile: dev.prod.Dockerfile-prisma-studio
   #    depends_on:
   #      - db
 
@@ -52,7 +45,7 @@ services:
     image: nginx
     volumes:
       - type: bind
-        source: ./proxy/nginx.conf
+        source: ../proxy/nginx.conf
         target: /etc/nginx/conf.d/default.conf
         read_only: true
     ports:

@@ -8,7 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "db:push": "dotenv -e .env.local prisma db push",
+    "db:push": "dotenv -e .env.production prisma db push",
     "prestart": "db:push"
   },
   "dependencies": {

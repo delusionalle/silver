@@ -1,0 +1,9 @@
+services:
+  pf:
+    extends:
+      file: compose.dev.yaml
+      service: pf
+    build:
+      dockerfile: prod.Dockerfile
+    env_file:
+      - ../pf/.env.production

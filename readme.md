@@ -2,6 +2,23 @@
 
 (производство challenge)
 
+## workflow
+
+- start development docker compose file with scripts/dev.sh
+- start production with scripts/prod.sh
+
+## structure
+
+dx/build files:
+- `/docker/` - docker compose files for dev and prod builds
+- `/scripts/` - useful scripts for dx
+
+project files:
+- `/model/` - jupyter notebook files for model
+- `/api/` - python api wrapping model
+- `/pf/` - analytics platform/dashboard
+- `/proxy/` - nginx proxy configuration
+
 ## impl
 
 ### ml
