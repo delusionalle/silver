@@ -21,7 +21,7 @@ export default function Home() {
                 'px-4'
               )}
             >
-              test
+              Login
             </Link>
           </nav>
         </div>
