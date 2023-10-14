@@ -33,6 +33,8 @@ export type SiteConfig = {
     //twitter: string
     github: string
   }
+  verstr: string
+  envstr: string
 }
 
 export type HNavConfig = {

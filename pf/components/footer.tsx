@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
 import { Icons } from '@/components/icons'
 import { ModeToggle } from '@/components/mode-toggle'
@@ -19,7 +20,9 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
               className="font-medium underline underline-offset-4"
             >
               @delusionalle/silver
-            </a>
+            </a>{' '}
+            | version{' '}
+            <a className="font-medium">{`${siteConfig.verstr}-${siteConfig.envstr}`}</a>
           </p>
         </div>
         <ModeToggle />

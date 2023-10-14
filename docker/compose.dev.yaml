@@ -8,6 +8,9 @@ services:
       - "3000:3000"
     env_file:
       - ../pf/.env.development
+    environment:
+      - GIT_COMMIT:${GIT_COMMIT}
+      - NEXT_PUBLIC_GIT_COMMIT:${GIT_COMMIT}
     volumes:
       - ../pf:/app
     depends_on:
