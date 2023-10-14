@@ -9,6 +9,10 @@ RUN corepack enable
 COPY . /app
 WORKDIR /app
 
+#RUN addgroup --system --gid 1001 nodejs
+#RUN adduser --system --uid 1001 nextjs
+#USER nextjs
+
 FROM base AS deps
 RUN pnpm install --frozen-lockfile
 
@@ -17,18 +21,11 @@ COPY --from=deps /app/node_modules ./node_modules
 RUN pnpm run build
 
 FROM base AS deploy
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
 
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/.next ./.next
 
 RUN pnpm prisma generate
 #RUN pnpm run db:push
-
-USER nextjs
-
-EXPOSE 3000
-ENV PORT 3000
 
 CMD ["pnpm", "start"]
