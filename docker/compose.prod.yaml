@@ -1,9 +1,8 @@
 services:
   pf:
-    extends:
-      file: compose.dev.yaml
-      service: pf
     build:
       dockerfile: prod.Dockerfile
     env_file:
       - ../pf/.env.production
+    # don't do none of that host volume mapping business
+    volumes: !reset []
