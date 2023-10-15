@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { dashboardConfig } from '@/config/dashboard'
@@ -6,6 +7,10 @@ import { Footer } from '@/components/footer'
 import { HNav } from '@/components/hnav'
 import { DashboardNav } from '@/components/nav'
 import { UserAccountNav } from '@/components/user-account-nav'
+
+export const metadata: Metadata = {
+  title: 'Silver | Dashboard',
+}
 
 interface DashboardLayoutProps {
   children?: React.ReactNode

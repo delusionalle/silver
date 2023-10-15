@@ -6,12 +6,12 @@ ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
 
-COPY . /app
-WORKDIR /app
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nodejs
+USER nodejs
 
-#RUN addgroup --system --gid 1001 nodejs
-#RUN adduser --system --uid 1001 nextjs
-#USER nextjs
+COPY --chown=nodejs:nodejs . /app
+WORKDIR /app
 
 FROM base AS deps
 RUN pnpm install --frozen-lockfile
