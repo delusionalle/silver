@@ -12,16 +12,6 @@ import model_util
 warnings.filterwarnings("ignore")
 
 
-def make_training_data():
-    training_data = pd.read_csv('../train.csv')
-    test_data = pd.read_csv('../test.csv')
-
-    x = training_data.drop(['Месяц3', 'Количество позиций', 'y'], axis=1)
-    y = training_data['y']
-
-    return train_test_split(x, y, test_size=0.2, random_state=42)
-
-
 search_space = {
     # 'max_depth': hp.quniform('max_depth', 3, 25, 1),
     'learning_rate': hp.uniform('learning_rate', 0.2, 0.25),
@@ -42,7 +32,7 @@ best_params = {
 
 
 def run_parameter_search(space, max_evals=5):
-    x_train, x_test, y_train, y_test = make_training_data()
+    x_train, x_test, y_train, y_test = model_util.make_training_data()
     current = model_util.params_from_file()
 
     def objective(search):
@@ -96,8 +86,9 @@ def make_new_model(do_search_params=False):
     current_params = get_params(do_search_params, search_space)
 
     clf = xgb.XGBClassifier(**current_params)
-    x_train, x_test, y_train, y_test = make_training_data()
+    x_train, x_test, y_train, y_test = model_util.make_training_data(pd.read_csv('./data/train.csv'))
 
     clf = model_util.fit(clf, x_train, y_train)
     model_util.model_to_file(clf)
 
+    return model_util.test(clf, x_test, y_test)
