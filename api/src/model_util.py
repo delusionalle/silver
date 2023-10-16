@@ -33,6 +33,7 @@ def xgb_f1(y, t, threshold=0.5):
 
 
 def fit(clf, xtr, ytr):
+    print("[model] Refitting with new data.")
     return clf.fit(xtr, ytr)
 
 
@@ -46,19 +47,19 @@ def test(clf, xts, yts):
 
 def params_from_file():
     print("[model] Loading saved parameters from params.pkl.")
-    return joblib.load('objects/params.pkl')
+    return joblib.load('./params.pkl')
 
 
 def params_to_file(current_params):
-    joblib.dump(current_params, 'objects/params.pkl')
-    print("[model] Saved current parameters to params.pkl.")
+    print("[model] Saving params to params.pkl.")
+    return joblib.dump(current_params, './params.pkl')
 
 
 def model_from_file():
     print("[model] Loading saved model from model.pkl.")
-    return joblib.load('objects/model.pkl')
+    return joblib.load('./model.pkl')
 
 
 def model_to_file(model):
-    joblib.dump(model, 'objects/model.pkl')
-    print("[model] Saved model to model.pkl.")
+    print("[model] Saving model to model.pkl.")
+    return joblib.dump(model, './model.pkl')

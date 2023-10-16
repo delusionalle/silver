@@ -32,7 +32,7 @@ best_params = {
 
 
 def run_parameter_search(space, max_evals=5):
-    x_train, x_test, y_train, y_test = model_util.make_training_data()
+    x_train, x_test, y_train, y_test = model_util.make_training_data(pd.read_csv('./train.csv'))
     current = model_util.params_from_file()
 
     def objective(search):
@@ -86,7 +86,7 @@ def make_new_model(do_search_params=False):
     current_params = get_params(do_search_params, search_space)
 
     clf = xgb.XGBClassifier(**current_params)
-    x_train, x_test, y_train, y_test = model_util.make_training_data(pd.read_csv('./data/train.csv'))
+    x_train, x_test, y_train, y_test = model_util.make_training_data(pd.read_csv('./train.csv'))
 
     clf = model_util.fit(clf, x_train, y_train)
     model_util.model_to_file(clf)

@@ -9,8 +9,8 @@ from sklearn_genetic import GASearchCV
 from sklearn_genetic.space import Integer
 
 # Load data
-train_data = pd.read_csv('../api/src/data/train.csv')
-test_data = pd.read_csv('../api/src/data/test.csv')
+train_data = pd.read_csv('../api/train.csv')
+test_data = pd.read_csv('../api/test.csv')
 
 # Data preprocessing
 exclude_columns = ['Месяц3', 'Количество позиций']

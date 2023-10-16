@@ -8,6 +8,7 @@ import model
 import model_util
 
 app = Flask(__name__)
+model.make_new_model()
 clf = model_util.model_from_file()
 
 
@@ -29,16 +30,27 @@ def parse_file_to_df(file):
 
 @app.post('/train')
 def train():
-    file = None #request.files['file']
+    global clf
+
+    file = request.files['file']
     if file:
         df = parse_file_to_df(file)
-        if not df:
+        if df.empty:
             return "Unsupported file format.", 400
 
-        df.to_csv('./data/train.csv', mode='a')
+        df_old = pd.read_csv('./train.csv')
+
+        if set(df.columns) != set(df_old.columns):
+            missing_in_old = set(df.columns) - set(df_old.columns)
+            missing_in_new = set(df_old.columns) - set(df.columns)
+
+            return f"Malformed data. You're missing columns: {missing_in_new}, current data is missing columns: {missing_in_old}", 400
+
+        df.to_csv('./train2.csv', mode='a')
 
     # TODO: Ask user if should run parameter optimization
-    acc = model.make_new_model(True)
+    acc = model.make_new_model()
+    clf = model_util.model_from_file()
     return f"Retraining completed. New accuracy: {acc}. Check console for logs", 200
 
 
@@ -48,7 +60,7 @@ def predict():
     print(file.filename)
 
     df = parse_file_to_df(file)
-    if not df:
+    if df.empty:
         return "Unsupported file format.", 400
 
     df = model_util.preprocess(df)
@@ -60,4 +72,4 @@ def predict():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=3002)
