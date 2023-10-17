@@ -3,7 +3,7 @@ import { env } from '@/env.mjs'
 import { SiteConfig } from '../types'
 
 export const siteConfig: SiteConfig = {
-  name: 'silver',
+  name: 'Severstal',
   description: 'A machine learning algorithm analytics platform',
   url: 'https://localhost',
   //ogImage: "https://tx.shadcn.com/og.jpg",

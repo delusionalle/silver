@@ -1,15 +1,38 @@
+import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { db } from '@/lib/db'
 import { Button } from '@/components/ui/button'
+import { EntryItem } from '@/components/entry-item'
+import { DashboardHeader } from '@/components/header'
+import { DashboardShell } from '@/components/shell'
 
-export default function DashboardPage() {
+export default async function DashboardPage() {
+  const entries = await db.entry.findMany({
+    take: 20,
+    orderBy: {
+      id: 'desc',
+    },
+  })
+
   return (
-    <>
-      <h1 className="text-2xl">dashboard</h1>
-      <Link href="/">
-        <Button>go to homepage</Button>
-      </Link>
-    </>
+    <DashboardShell>
+      <DashboardHeader
+        heading="Overview"
+        text="Data at a glance"
+      ></DashboardHeader>
+      <div>
+        {entries?.length ? (
+          <div className="divide-border-200 divide-y rounded-md border">
+            {entries.map((entry) => (
+              <EntryItem key={entry.id} entry={entry} />
+            ))}
+          </div>
+        ) : (
+          <div>No entries found. TEMP</div>
+        )}
+      </div>
+    </DashboardShell>
   )
 }

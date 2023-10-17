@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import { useSelectedLayoutSegment } from 'next/navigation'
 import { HNavItem } from '@/types'
@@ -20,14 +21,11 @@ export function HNav({ items, children }: HNavProps) {
 
   return (
     <div className="flex gap-6 md:gap-10">
-      <Link href="/" className="hidden items-center space-x-2 md:flex">
+      <Link href="/" className=" items-center md:flex">
         <Icons.logo />
-        <span className="hidden font-bold sm:inline-block">
-          {siteConfig.name}
-        </span>
       </Link>
       {items?.length ? (
-        <nav className="hidden gap-6 md:flex">
+        <nav className="gap-6 md:flex mt-4">
           {items?.map((item, index) => (
             <Link
               key={index}
@@ -45,13 +43,13 @@ export function HNav({ items, children }: HNavProps) {
           ))}
         </nav>
       ) : null}
-      <button
-        className="flex items-center space-x-2 md:hidden"
-        onClick={() => setShowMobileMenu(!showMobileMenu)}
-      >
-        {showMobileMenu ? <Icons.close /> : <Icons.logo />}
-        <span className="font-bold">Menu</span>
-      </button>
+      {/*<button*/}
+      {/*  className="flex items-center space-x-2 md:hidden"*/}
+      {/*  onClick={() => setShowMobileMenu(!showMobileMenu)}*/}
+      {/*>*/}
+      {/*  {showMobileMenu ? <Icons.close /> : <Icons.logo />}*/}
+      {/*  <span className="font-bold">Menu</span>*/}
+      {/*</button>*/}
       {/*{showMobileMenu && items && (*/}
       {/*  <MobileNav items={items}>{children}</MobileNav>*/}
       {/*)}*/}

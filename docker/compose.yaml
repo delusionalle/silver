@@ -10,13 +10,21 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      api:
+        condition: service_started
+    networks:
+      mainnet:
+        ipv4_address: 172.25.0.11
 
   api:
-    build: ../api
+    build: ../api_rewrite
     ports:
-      - "3002:3002"
+      - 4000:4000
     volumes:
-      - ../api:/app
+      - ../api_rewrite:/app
+    networks:
+      mainnet:
+        ipv4_address: 172.25.0.12
 
   db:
     image: postgres:16-alpine
@@ -34,6 +42,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      mainnet:
+        ipv4_address: 172.25.0.13
 
   proxy:
     image: nginx
@@ -46,6 +57,17 @@ services:
       - 80:80
     depends_on:
       - pf
+    networks:
+      mainnet:
+        ipv4_address: 172.25.0.10
 
 volumes:
   db-data: { }
+
+networks:
+  mainnet:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1

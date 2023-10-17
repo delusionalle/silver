@@ -1,0 +1,17 @@
+
+<!DOCTYPE html>
+<html lang="en">
+ 
+<head>
+    <title>Upload/View Excel</title>
+</head>
+ 
+<body>
+    <h1>Upload Excel File (.xlsx)</h1>
+    <form action="{{ url_for('view') }}" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
+        <input type="submit" value="Upload">
+    </form>
+</body>
+ 
+</html>

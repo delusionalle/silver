@@ -18,9 +18,14 @@ export const dashboardConfig: DashboardConfig = {
   ],
   sidebarNav: [
     {
-      title: 'Predictions',
+      title: 'Overview',
       href: '/dashboard',
-      icon: 'database',
+      icon: 'chevronRight',
+    },
+    {
+      title: 'Predict',
+      href: '/dashboard/predict',
+      icon: 'add',
     },
     {
       title: 'Analytics',

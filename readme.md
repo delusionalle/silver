@@ -69,7 +69,16 @@ linking:
 
 ## notes
 
-- should improve and clean ml solution
+### data flow
+
+1. Data entry sent to (Flask)/predict
+2. Receive Yes/No, show to user
+3. Send data entry + yes/no into (Next.js)/entries POST
+4. (Next.js)/entries POST sends data to database with historical entries
+---
+1. Load N entries using (Next.js)/entries GET
+2. Showcase entries on dashboard overview or use for graphs
+---
 
 12 oct progress check:
 - [x] FIX DOCKER

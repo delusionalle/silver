@@ -29,6 +29,8 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   })
   const [isLoading, setIsLoading] = React.useState<boolean>(false)
   const [isDiscordLoading, setIsDiscordLoading] = React.useState<boolean>(false)
+  const [isGithubLoading, setIsGithubLoading] = React.useState<boolean>(false)
+  const [isGoogleLoading, setIsGoogleLoading] = React.useState<boolean>(false)
   const searchParams = useSearchParams()
 
   async function onSubmit(data: FormData) {
@@ -58,28 +60,68 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
   return (
     <div className={cn('grid gap-6', className)} {...props}>
-      <div className="relative">
-        <div className="absolute inset-0 flex items-center">
-          <span className="w-full border-t" />
-        </div>
-      </div>
+      {/*<div className="relative">*/}
+      {/*  <div className="absolute inset-0 flex items-center">*/}
+      {/*    <span className="w-full border-t" />*/}
+      {/*  </div>*/}
+      {/*</div>*/}
+      {/*<button*/}
+      {/*  type="button"*/}
+      {/*  className={cn(buttonVariants({ variant: 'outline' }))}*/}
+      {/*  onClick={() => {*/}
+      {/*    setIsDiscordLoading(true)*/}
+      {/*    signIn('discord')*/}
+      {/*  }}*/}
+      {/*  disabled={*/}
+      {/*    isLoading || isDiscordLoading || isGithubLoading || isGoogleLoading*/}
+      {/*  }*/}
+      {/*>*/}
+      {/*  {isDiscordLoading ? (*/}
+      {/*    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />*/}
+      {/*  ) : (*/}
+      {/*    <Icons.discord className="mr-2 h-4 w-4" />*/}
+      {/*  )}*/}
+      {/*  {'    '}*/}
+      {/*  Discord*/}
+      {/*</button>*/}
       <button
         type="button"
         className={cn(buttonVariants({ variant: 'outline' }))}
         onClick={() => {
-          setIsDiscordLoading(true)
-          signIn('discord')
+          setIsGithubLoading(true)
+          signIn('github')
         }}
-        disabled={isLoading || isDiscordLoading}
+        disabled={
+          isLoading || isDiscordLoading || isGithubLoading || isGoogleLoading
+        }
       >
-        {isDiscordLoading ? (
+        {isGithubLoading ? (
           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
         ) : (
-          <Icons.discord className="mr-2 h-4 w-4" />
+          <Icons.gitHubSmall className="mr-2 h-4 w-4" />
         )}
         {'    '}
-        Discord
+        GitHub
       </button>
+      {/*<button*/}
+      {/*  type="button"*/}
+      {/*  className={cn(buttonVariants({ variant: 'outline' }))}*/}
+      {/*  onClick={() => {*/}
+      {/*    setIsGoogleLoading(true)*/}
+      {/*    signIn('google')*/}
+      {/*  }}*/}
+      {/*  disabled={*/}
+      {/*    isLoading || isDiscordLoading || isGithubLoading || isGoogleLoading*/}
+      {/*  }*/}
+      {/*>*/}
+      {/*  {isGoogleLoading ? (*/}
+      {/*    <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />*/}
+      {/*  ) : (*/}
+      {/*    <Icons.google className="mr-2 h-4 w-4" />*/}
+      {/*  )}*/}
+      {/*  {'    '}*/}
+      {/*  Google*/}
+      {/*</button>*/}
     </div>
   )
 }
