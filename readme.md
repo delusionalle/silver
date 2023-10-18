@@ -69,6 +69,13 @@ linking:
 
 ## notes
 
+### for wednesday:
+
+- implement predict route (paste it from old api) (DO THIS FIRST)
+- implement historical data lookup (this depends on predict route working) (DO THIS SECOND, VERY IMPORTANT)
+- implement graphing
+- implement settings page (button to call for train, maybe manual param change)
+
 ### data flow
 
 1. Data entry sent to (Flask)/predict
