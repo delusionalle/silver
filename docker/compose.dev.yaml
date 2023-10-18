@@ -4,3 +4,7 @@ services:
       dockerfile: dev.Dockerfile
     env_file:
       - ../pf/.env.development
+
+  api:
+    build:
+      dockerfile: dev.Dockerfile

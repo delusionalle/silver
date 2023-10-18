@@ -20,15 +20,7 @@ import { toast } from '@/components/ui/use-toast'
 const filenameExtensionRegex = /(?:\.([^.]+))?$/
 
 const formSchema = z.object({
-  file: z
-    .string()
-    .refine(
-      (file) =>
-        ['json', 'csv', 'xls', 'xlsx'].includes(
-          filenameExtensionRegex.exec(file)![1]
-        ),
-      "Only '.json', '.csv', '.xls', '.xlsx' files are supported."
-    ),
+  file: z.custom<File>(),
 })
 
 export function DataEntryForm() {
@@ -57,7 +49,9 @@ export function DataEntryForm() {
                   <Input
                     type="file"
                     accept=".json,.csv,.xls,.xlsx"
-                    {...field}
+                    onChange={(e) =>
+                      field.onChange(e.target.files ? e.target.files[0] : null)
+                    }
                   />
                 </FormControl>
                 <FormDescription>

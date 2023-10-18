@@ -3,7 +3,6 @@
 import "./env.mjs"
 
 import {setDefaultResultOrder} from 'dns'
-setDefaultResultOrder('ipv4first')
 
 const nextConfig = {
   reactStrictMode: true,
@@ -14,7 +13,7 @@ const nextConfig = {
     return [
       {
         // matching all API routes
-        source: "/*",
+        source: "/api/:path*",
         headers: [
           { key: "Access-Control-Allow-Credentials", value: "true" },
           { key: "Access-Control-Allow-Origin", value: "*" }, // replace this your actual origin

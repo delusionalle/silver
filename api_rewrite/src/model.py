@@ -3,6 +3,10 @@ import pandas as pd
 import xgboost as xgb
 from sklearn.metrics import f1_score
 from sklearn.model_selection import train_test_split
+import matplotlib
+
+matplotlib.use('AGG')
+import matplotlib.pyplot as plt
 
 import parsers
 
@@ -21,7 +25,7 @@ def make_model():
 
 
 def make_training_data():
-    training_data = pd.read_csv('data/train.csv')
+    training_data = pd.read_csv('../data/train.csv')
     x_train = parsers.process(training_data).drop('is_late', axis=1)
     y_train = training_data['is_late']
     return x_train, y_train
@@ -36,12 +40,11 @@ def accuracy(model):
 
 
 def save_model(model):
-    joblib.dump(model, 'model.pkl')
+    model.save_model('model.json')
 
 
-def load_model():
+def load_model(model):
     try:
-        return joblib.load('model.pkl')
+        return model.load_model('model.json')
     except Exception as e:
         return None
-

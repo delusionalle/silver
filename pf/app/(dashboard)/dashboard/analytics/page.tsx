@@ -1,3 +1,4 @@
+import { headers } from 'next/headers'
 import Link from 'next/link'
 
 import { Button } from '@/components/ui/button'
@@ -12,12 +13,19 @@ import { DashboardHeader } from '@/components/header'
 import { DashboardShell } from '@/components/shell'
 
 export default async function AnalyticsPage() {
-  const res = await fetch('http://localhost:4000/accuracy', {
+  const h = headers()
+
+  const accuracyRes = await fetch('http://localhost:3000/api/accuracy/', {
     method: 'GET',
-    headers: {
-      Accept: 'application/json',
-    },
+    headers: headers(),
   })
+
+  const paramsRes = await fetch('http://localhost:3000/api/params', {
+    method: 'GET',
+  })
+
+  const params = await paramsRes.json()
+  console.log(params)
 
   return (
     <DashboardShell>
@@ -25,12 +33,25 @@ export default async function AnalyticsPage() {
         heading="Analytics"
         text="Dive deeper into the data"
       ></DashboardHeader>
-      <div className="divide-border-200 divide-y rounded-md border">
-        <Card className="w-[350px] m-8">
+      <div className="divide-border-200 divide-y rounded-md border flex flex-wrap justify-start align-top">
+        <Card className="w-1/3 m-8 h-36">
           <CardHeader>
             <CardTitle>Генеральная аналитика</CardTitle>
           </CardHeader>
-          <CardContent>Точность модели: {res.status}</CardContent>
+          <CardContent>
+            <b>Точность модели: </b>
+            {Math.round((await accuracyRes.json()) * 10000) / 10000}
+          </CardContent>
+        </Card>
+        <Card className="w-1/3 m-8">
+          <CardHeader>
+            <CardTitle>Параметры модели</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {' '}
+            <b>Параметры модели</b>
+            <pre>{JSON.stringify(params, null, 2)}</pre>
+          </CardContent>
         </Card>
       </div>
     </DashboardShell>

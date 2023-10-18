@@ -6,3 +6,9 @@ services:
       - ../pf/.env.production
     # don't do none of that host volume mapping business
     volumes: !reset []
+
+  api:
+    build:
+      dockerfile: prod.Dockerfile
+    # don't do none of that host volume mapping business
+    volumes: !reset [ ]
