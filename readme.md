@@ -2,6 +2,25 @@
 
 (производство challenge)
 
+## DEPLOYMENT INFO
+
+### 1. `scripts/prod.sh build` builds the containers
+
+### 2. `scripts/prod.sh up` launches the project in production mode
+
+### you need docker compose.
+you probably want to use WSL cause Windows support is untested.
+
+do these in this order
+
+dont touch the environment variables
+
+dont run the dev mode
+
+if you dont have bash replace the script with `docker compose -f docker/compose.yaml -f docker/compose.prod.yaml`
+
+If you launch the project in one environment and want to run it in another, rebuild the containers before doing so
+
 ## docs
 
 ### basic usage
@@ -26,6 +45,7 @@ the production config builds upon and depends on the development config
 
 services:
 
+- `api` - python fastapi linking to model
 - `pf` - next.js project. has 2 dockerfiles in the `/pf/` directory
 - `db` - postgresql database. there are 2 databases stored on the same volume for dev and prod env
 - `proxy` - nginx proxying next.js, configurable at `proxy/nginx.conf`
@@ -50,9 +70,15 @@ an example (empty) .env file can be found at pf/.env.example
 
 ## impl
 
-### ml
+### api
 
-- todo: detail
+web part
+- python
+- fastapi
+
+algo part
+- xgboost classifier (scikit wrapper)
+- params found with hyperopt
 
 ### platform
 
@@ -67,32 +93,3 @@ linking:
 - some sort of api for middlemanning model and frontend
 - todo: detail
 
-## notes
-
-### for wednesday:
-
-- implement predict route (paste it from old api) (DO THIS FIRST)
-- implement historical data lookup (this depends on predict route working) (DO THIS SECOND, VERY IMPORTANT)
-- implement graphing
-- implement settings page (button to call for train, maybe manual param change)
-
-### data flow
-
-1. Data entry sent to (Flask)/predict
-2. Receive Yes/No, show to user
-3. Send data entry + yes/no into (Next.js)/entries POST
-4. (Next.js)/entries POST sends data to database with historical entries
----
-1. Load N entries using (Next.js)/entries GET
-2. Showcase entries on dashboard overview or use for graphs
----
-
-12 oct progress check:
-- [x] FIX DOCKER
-- make API for model (flask or django I DONT CARE JUST MAKE IT)
-- [x] implement nginx proxy (should be easy)
-- [x] ACTUALLY MAKE DASHBOARD | BASIC LAYOUT
-- WTF KIND OF ANALYTICS DO WE NEED?
-- ACTUALLY MAKE DASHBOARD | ANALYTICS
-
-## .2023

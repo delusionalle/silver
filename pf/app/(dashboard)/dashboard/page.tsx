@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import { db } from '@/lib/db'
 import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import WipeDbButton from '@/components/delete-db-button'
 import { EntryItem } from '@/components/entry-item'
 import { DashboardHeader } from '@/components/header'
@@ -22,9 +23,6 @@ export default async function DashboardPage() {
     },
   })
 
-  console.log(entries)
-  console.log(entries[0])
-
   return (
     <DashboardShell>
       <DashboardHeader
@@ -32,7 +30,7 @@ export default async function DashboardPage() {
         text="Быстрый доступ к историческим данным"
       ></DashboardHeader>
       <div>
-        <WipeDbButton />
+        <Separator />
       </div>
       <div>
         {entries?.length ? (

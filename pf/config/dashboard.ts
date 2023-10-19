@@ -9,6 +9,7 @@ export const dashboardConfig: DashboardConfig = {
     {
       title: 'Документация',
       href: '/docs',
+      disabled: true,
     },
     {
       title: 'Поддержка',
@@ -23,7 +24,7 @@ export const dashboardConfig: DashboardConfig = {
       icon: 'chevronRight',
     },
     {
-      title: 'Предсказания',
+      title: 'Прогнозы',
       href: '/dashboard/predict',
       icon: 'add',
     },

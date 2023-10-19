@@ -9,7 +9,7 @@ import { ThemeProvider } from '@/components/theme-provider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Silver Analytics Platform',
+  title: 'Северсталь',
 }
 
 export default function RootLayout({

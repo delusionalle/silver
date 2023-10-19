@@ -1,27 +1,16 @@
-import warnings
-
 import joblib
 import pandas as pd
 import xgboost as xgb
 from sklearn.metrics import f1_score
 from sklearn.model_selection import train_test_split
-from hyperopt import hp, STATUS_OK, Trials, fmin, tpe
+import matplotlib
 
-import model_util
+matplotlib.use('AGG')
+import matplotlib.pyplot as plt
 
-warnings.filterwarnings("ignore")
+import parsers
 
-
-search_space = {
-    # 'max_depth': hp.quniform('max_depth', 3, 25, 1),
-    'learning_rate': hp.uniform('learning_rate', 0.2, 0.25),
-    'gamma': hp.uniform('gamma', 0, 0.03),
-    # 'min_child_weight': hp.quniform('min_child_weight', 0, 10, 1),
-    'n_estimators': 260,
-    'seed': 0
-}
-
-best_params = {
+params = {
     'learning_rate': 0.2222699,
     'max_depth': 14,
     'n_estimators': 200,
@@ -31,64 +20,30 @@ best_params = {
 }
 
 
-def run_parameter_search(space, max_evals=5):
-    x_train, x_test, y_train, y_test = model_util.make_training_data(pd.read_csv('./train.csv'))
-    current = model_util.params_from_file()
-
-    def objective(search):
-        clf = xgb.XGBClassifier(
-            learning_rate=search['learning_rate'],
-            n_estimators=current['n_estimators'],
-            max_depth=current['max_depth'],
-            gamma=search['gamma'],
-            min_child_weight=current['min_child_weight'],
-            verbosity=0, silent=True
-        )
-
-        evaluation = [(x_train, y_train), (x_test, y_test)]
-
-        clf.fit(x_train, y_train, eval_set=evaluation, eval_metric='auc', early_stopping_rounds=10,
-                verbose=False)
-
-        prediction = clf.predict(x_test)
-        accuracy = f1_score(y_test, prediction > 0.5, average='macro')
-        print(f'SCORE: {accuracy}, PARAMS: {search}')
-        return {
-            'loss': -accuracy,
-            'status': STATUS_OK
-        }
-
-    trials = Trials()
-    new_params = fmin(fn=objective, space=space, algo=tpe.suggest, max_evals=max_evals, trials=trials)
-    print(new_params)
-    return new_params
+def make_model():
+    return xgb.XGBClassifier(**params)
 
 
-def get_params(do_search_params=False, spc=None):
-    current_params = model_util.params_from_file()
-
-    if do_search_params:
-        print("[model] Starting parameter optimization. This will take a while.")
-        new_params = run_parameter_search(spc)
-
-        print("[model] Optimization finished. [y] to use new params")
-        if input() == 'y':
-            current_params = current_params | new_params
-            model_util.params_to_file(current_params)
-            print("[model] Merged newly optimized parameters with current parameters.")
-        else:
-            print("[model] Dropping newly optimized parameters.")
-
-    return current_params
+def make_training_data():
+    training_data = pd.read_csv('../data/train.csv')
+    training_data = parsers.rename_columns(training_data, is_train_set=True)
+    x_train = parsers.process(training_data).drop('is_late', axis=1)
+    y_train = training_data['is_late']
+    return x_train, y_train
 
 
-def make_new_model(do_search_params=False):
-    current_params = get_params(do_search_params, search_space)
+def accuracy(model, xts, yts):
+    preds = model.predict(xts)
+    acc = f1_score(yts, preds, average='macro')
+    return acc
 
-    clf = xgb.XGBClassifier(**current_params)
-    x_train, x_test, y_train, y_test = model_util.make_training_data(pd.read_csv('./train.csv'))
 
-    clf = model_util.fit(clf, x_train, y_train)
-    model_util.model_to_file(clf)
+def save_model(model):
+    model.save_model('model.json')
 
-    return model_util.test(clf, x_test, y_test)
+
+def load_model(model):
+    try:
+        return model.load_model('model.json')
+    except Exception as e:
+        return None

@@ -15,19 +15,22 @@ export function EntryItem({ entry }: EntryItemProps) {
   return (
     <div className="flex items-center justify-between p-4">
       <div className="grid gap-1">
-        <Link
-          href={`/editor/${entry.id}`}
-          className="font-semibold hover:underline"
-        >
+        <a className="font-semibold hover:underline">
           ID в базе: {entry.id} | ID поставщика: {data[0][1]?.toString()} | ID
           материала: {data[1][1]?.toString()}
-        </Link>
+        </a>
         <div>
           <p className="text-sm text-muted-foreground">
             {formatDate(entry.createdAt?.toDateString())} -{' '}
             {entry.createdAt?.toLocaleTimeString()}
           </p>
-          <>{data[-1][1] ? <Badge></Badge> : <Badge></Badge>}</>
+          <>
+            {data[41][1] == 0 ? (
+              <Badge>Вовремя</Badge>
+            ) : (
+              <Badge variant="destructive">Вероятен срыв</Badge>
+            )}
+          </>
         </div>
       </div>
     </div>
