@@ -81,28 +81,6 @@ def run_training():
     return "Model retrained.", 200
 
 
-# @api.get('/predict')
-# async def make_prediction(request: Request):
-#     global is_trained
-#
-#     if not is_trained:
-#         clf.fit(x, y)
-#         is_trained = True
-#
-#     df = parsers.from_json(request.json())
-#     df = parsers.process(df)
-#     if not df:
-#         return "Malformed data", 400
-#
-#     preds = clf.predict(df)
-#     preds_df = pd.DataFrame({
-#         'id': range(len(preds)),
-#         'value': preds
-#     })
-#
-#     return preds_df.to_json()
-
-
 @api.post('/predict')
 async def predict(file: UploadFile):
     df = await parsers.from_file(file)

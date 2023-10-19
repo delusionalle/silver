@@ -7,7 +7,7 @@ import { Icons } from '@/components/icons'
 import { UserAuthForm } from '@/components/user-auth-form'
 
 export const metadata: Metadata = {
-  title: 'Silver | Log in',
+  title: 'Северсталь',
 }
 
 export default function LoginPage() {
@@ -29,10 +29,10 @@ export default function LoginPage() {
         <div className="flex flex-col space-y-2 text-center justify-end">
           {/*<Icons.logo className="h-6 w-6 justify-center items-center mx-14" />*/}
           <h1 className="text-2xl font-semibold tracking-tight">
-            Welcome back
+            Добро пожаловать
           </h1>
           <p className="text-sm text-muted-foreground">
-            Continue with an application to sign in
+            Используйте приложение, чтобы войти
           </p>
         </div>
         <UserAuthForm />
@@ -41,7 +41,7 @@ export default function LoginPage() {
             href="/register"
             className="hover:text-brand underline underline-offset-4"
           >
-            Don&apos;t have an account? Sign Up
+            Нет аккаунта? Создать новый аккаунт
           </Link>
         </p>
       </div>

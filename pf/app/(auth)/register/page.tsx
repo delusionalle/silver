@@ -28,30 +28,13 @@ export default function RegisterPage() {
           <div className="flex flex-col space-y-2 text-center">
             {/*<Icons.logo className="mx-auto h-6 w-6" />*/}
             <h1 className="text-2xl font-semibold tracking-tight">
-              Create an account
+              Создайте аккаунт
             </h1>
             <p className="text-sm text-muted-foreground">
-              Log in using an application to continue
+              Используйте приложение, чтобы продолжить
             </p>
           </div>
           <UserAuthForm />
-          <p className="px-8 text-center text-sm text-muted-foreground">
-            By clicking continue, you agree to our{' '}
-            <Link
-              href="/terms"
-              className="hover:text-brand underline underline-offset-4"
-            >
-              Terms of Service
-            </Link>{' '}
-            and{' '}
-            <Link
-              href="/privacy"
-              className="hover:text-brand underline underline-offset-4"
-            >
-              Privacy Policy
-            </Link>
-            .
-          </p>
         </div>
       </div>
     </div>
