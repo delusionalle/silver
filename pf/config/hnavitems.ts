@@ -3,11 +3,11 @@ import { HNavConfig } from '@/types'
 export const hNavConfig: HNavConfig = {
   hnavItems: [
     {
-      title: 'Dashboard',
+      title: 'Панель',
       href: '/dashboard',
     },
     {
-      title: 'Documentation',
+      title: 'Документация',
       href: '/docs',
     },
   ],

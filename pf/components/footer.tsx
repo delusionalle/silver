@@ -12,7 +12,7 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
         <div className="flex flex-col items-center gap-4 px-8 md:flex-row md:gap-2 md:px-0">
           <Icons.gitHubSmall />
           <p className="text-center text-sm leading-loose md:text-left">
-            open-source{' '}
+            В открытом доступе{' '}
             <a
               href="https://github.com/delusionalle/silver"
               target="_blank"
@@ -21,8 +21,8 @@ export function Footer({ className }: React.HTMLAttributes<HTMLElement>) {
             >
               @delusionalle/silver
             </a>{' '}
-            | version{' '}
-            <a className="font-medium">{`${siteConfig.verstr}-${siteConfig.envstr}`}</a>
+            |{' '}
+            <a className="font-medium">{`${siteConfig.verstr} ${siteConfig.envstr}`}</a>
           </p>
         </div>
         <ModeToggle />

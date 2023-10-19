@@ -1,5 +1,7 @@
 'use client'
 
+import { redirect, RedirectType, useRouter } from 'next/navigation'
+import { NextResponse } from 'next/server'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -15,7 +17,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { toast } from '@/components/ui/use-toast'
 
 const filenameExtensionRegex = /(?:\.([^.]+))?$/
 
@@ -31,8 +32,17 @@ export function DataEntryForm() {
     },
   })
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
-    console.log(data)
+  const router = useRouter()
+  async function onSubmit(data: z.infer<typeof formSchema>) {
+    const formData = new FormData()
+    formData.append('file', data.file)
+
+    const json = await fetch('http://localhost:3000/api/predict', {
+      method: 'POST',
+      body: formData,
+    }).then((r) => r.json())
+
+    router.push('/dashboard')
   }
 
   return (
@@ -48,20 +58,20 @@ export function DataEntryForm() {
                 <FormControl>
                   <Input
                     type="file"
-                    accept=".json,.csv,.xls,.xlsx"
+                    accept=".csv,.xls,.xlsx"
                     onChange={(e) =>
                       field.onChange(e.target.files ? e.target.files[0] : null)
                     }
                   />
                 </FormControl>
                 <FormDescription>
-                  Принимает файлы типа JSON, CSV, XLS, XLSX.
+                  Принимает файлы типа CSV, XLS, XLSX.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
-          <Button type="submit">Submit form</Button>
+          <Button type="submit">Загрузить</Button>
         </div>
       </form>
     </Form>

@@ -3,37 +3,37 @@ import { DashboardConfig } from '@/types'
 export const dashboardConfig: DashboardConfig = {
   mainNav: [
     {
-      title: 'Dashboard',
+      title: 'Панель',
       href: '/dashboard',
     },
     {
-      title: 'Documentation',
+      title: 'Документация',
       href: '/docs',
     },
     {
-      title: 'Support',
+      title: 'Поддержка',
       href: '/support',
       disabled: true,
     },
   ],
   sidebarNav: [
     {
-      title: 'Overview',
+      title: 'Обзор',
       href: '/dashboard',
       icon: 'chevronRight',
     },
     {
-      title: 'Predict',
+      title: 'Предсказания',
       href: '/dashboard/predict',
       icon: 'add',
     },
     {
-      title: 'Analytics',
+      title: 'Аналитика',
       href: '/dashboard/analytics',
       icon: 'graph',
     },
     {
-      title: 'Settings',
+      title: 'Настройки',
       href: '/dashboard/settings',
       icon: 'settings',
     },

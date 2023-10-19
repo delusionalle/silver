@@ -5,8 +5,8 @@ export default function DashboardLoading() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading="Overview"
-        text="Data at a glance"
+        heading="Обзор"
+        text="Быстрый доступ к историческим данным"
       ></DashboardHeader>
       <div className="divide-border-200 divide-y rounded-md border"></div>
     </DashboardShell>

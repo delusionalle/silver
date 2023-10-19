@@ -9,7 +9,10 @@ import { DashboardShell } from '@/components/shell'
 export default function SettingsPage() {
   return (
     <DashboardShell>
-      <DashboardHeader heading="Predict" text="Query the model with new data" />
+      <DashboardHeader
+        heading="Предсказания"
+        text="Анализируйте данные с помощью алгоритма"
+      />
       <div className="divide-border-200 divide-y rounded-md border">
         <DataEntryForm />
       </div>

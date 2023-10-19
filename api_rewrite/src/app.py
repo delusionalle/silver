@@ -4,17 +4,17 @@ import json
 import joblib
 import matplotlib.pyplot as plt
 import pandas as pd
+import shap
 import xgboost
-from fastapi import FastAPI, Request, Response, BackgroundTasks
+from fastapi import FastAPI, Request, Response, BackgroundTasks, UploadFile
 from fastapi.middleware import cors
 import warnings
-import shap
+import shap_module
 from sklearn.model_selection import train_test_split
 from starlette.responses import JSONResponse
 
 import parsers
 import model
-
 
 warnings.filterwarnings('ignore')
 
@@ -36,14 +36,24 @@ if not clf:
 
 is_trained = False
 
+friendly_x = x
+friendly_columns = [shap_module.friendly_names.get(n, n) for n in x.columns]
+friendly_x.columns = friendly_columns
 
-def create_plot():
-    buf = io.BytesIO()
+shap.initjs()
+explainer = shap.TreeExplainer(clf)
+shap_values = explainer.shap_values(friendly_x[:1000])
 
-    clf.get_booster().get_score(importance_type='gain', show=False)
 
-    plt.savefig(buf, format='png', dpi=150, bbox_inches='tight')
-    return buf
+@api.get('/force_plot')
+async def get_force_plot():
+
+    plots = {}
+    for i in range(1):
+        ind = i
+        plots[i] = shap_module.force_plot_html(explainer, shap_values, friendly_x)
+
+    return shap_module.force_plot_html(explainer, shap_values, friendly_x)
 
 
 @api.get('/importances')
@@ -66,34 +76,47 @@ def homepage():
 @api.post('/train')
 def run_training():
     global is_trained
-    clf.fit(x, y)
+    clf.fit(xtr, ytr, eval_set=[(xts, yts)], verbose=50)
     is_trained = True
     return "Model retrained.", 200
 
 
-@api.get('/predict')
-async def make_prediction(request: Request):
-    global is_trained
+# @api.get('/predict')
+# async def make_prediction(request: Request):
+#     global is_trained
+#
+#     if not is_trained:
+#         clf.fit(x, y)
+#         is_trained = True
+#
+#     df = parsers.from_json(request.json())
+#     df = parsers.process(df)
+#     if not df:
+#         return "Malformed data", 400
+#
+#     preds = clf.predict(df)
+#     preds_df = pd.DataFrame({
+#         'id': range(len(preds)),
+#         'value': preds
+#     })
+#
+#     return preds_df.to_json()
 
-    if not is_trained:
-        clf.fit(x, y)
-        is_trained = True
 
-    df = parsers.from_json(request.json())
+@api.post('/predict')
+async def predict(file: UploadFile):
+    df = await parsers.from_file(file)
+    df = parsers.rename_columns(df)
     df = parsers.process(df)
-    if not df:
-        return "Malformed data", 400
+    if df is None:
+        return "Malformed data.", 400
 
     preds = clf.predict(df)
-    preds_df = pd.DataFrame({
-        'id': range(len(preds)),
-        'value': preds
-    })
+    df.insert(len(df.columns), "is_late", preds, True)
 
-    return preds_df.to_json()
+    return {'predictions': df.to_json(orient='records')}
 
 
 @api.get('/accuracy')
 async def get_accuracy():
-    return model.accuracy(clf)
-
+    return model.accuracy(clf, xts, yts)

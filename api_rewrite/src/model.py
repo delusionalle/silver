@@ -26,14 +26,13 @@ def make_model():
 
 def make_training_data():
     training_data = pd.read_csv('../data/train.csv')
+    training_data = parsers.rename_columns(training_data, is_train_set=True)
     x_train = parsers.process(training_data).drop('is_late', axis=1)
     y_train = training_data['is_late']
     return x_train, y_train
 
 
-def accuracy(model):
-    x, y = make_training_data()
-    xtr, xts, ytr, yts = train_test_split(x, y, test_size=0.25)
+def accuracy(model, xts, yts):
     preds = model.predict(xts)
     acc = f1_score(yts, preds, average='macro')
     return acc

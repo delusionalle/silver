@@ -3,8 +3,8 @@ import { env } from '@/env.mjs'
 import { SiteConfig } from '../types'
 
 export const siteConfig: SiteConfig = {
-  name: 'Severstal',
-  description: 'A machine learning algorithm analytics platform',
+  name: 'Северсталь',
+  description: 'Платформа для анализа работы поставок через ИИ',
   url: 'https://localhost',
   //ogImage: "https://tx.shadcn.com/og.jpg",
   links: {
@@ -12,5 +12,5 @@ export const siteConfig: SiteConfig = {
     github: 'https://github.com/delusionalle/silver',
   },
   verstr: env.NEXT_PUBLIC_NODE_ENV === 'production' ? '1.0.0' : `floating`,
-  envstr: env.NEXT_PUBLIC_NODE_ENV === 'production' ? 'prod' : 'dev',
+  envstr: env.NEXT_PUBLIC_NODE_ENV === 'production' ? '' : 'dev',
 }

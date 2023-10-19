@@ -26,7 +26,7 @@ export default function HomeLayout({ children }: HomeLayoutProps) {
                 'px-4 mt-4'
               )}
             >
-              Login
+              Войти
             </Link>
           </nav>
         </div>

@@ -9,7 +9,7 @@ import { DashboardNav } from '@/components/nav'
 import { UserAccountNav } from '@/components/user-account-nav'
 
 export const metadata: Metadata = {
-  title: 'Silver | Dashboard',
+  title: 'Панель',
 }
 
 interface DashboardLayoutProps {
